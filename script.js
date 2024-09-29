@@ -6,7 +6,7 @@ const StateOfFilterTasks = Object.freeze({
 
 const $ = document.querySelector.bind(document)
 
-function TaskManager(tasks = []) {
+function taskManager(tasks = []) {
   this.tasks = tasks;
   this.currentTaskIndex = null;
   this.currentFilter = StateOfFilterTasks.ALL;
@@ -28,7 +28,7 @@ function TaskManager(tasks = []) {
   this.renderTasks(); 
 }
 
-TaskManager.prototype.addTask = function () {
+taskManager.prototype.addTask = function () {
   const taskNameInput = $('.add__input');
   const taskName = taskNameInput.value;
 
@@ -43,23 +43,23 @@ TaskManager.prototype.addTask = function () {
   }
 };
 
-TaskManager.prototype.clearTaskNameInput = function () {
+taskManager.prototype.clearTaskNameInput = function () {
   $('.add__input').value = '';
 };
 
-TaskManager.prototype.deleteTask = function (index) {
+taskManager.prototype.deleteTask = function (index) {
   this.tasks.splice(index, 1);
   this.renderTasks();
 };
 
-TaskManager.prototype.openEditTaskModal = function (index) {
+taskManager.prototype.openEditTaskModal = function (index) {
   this.currentTaskIndex = index;
   const editInput = $('.edit__input');
   editInput.value = this.tasks[index].name;
   this.editTaskModal.classList.add('open');
 };
 
-TaskManager.prototype.saveTaskAfterEdit = function () {
+taskManager.prototype.saveTaskAfterEdit = function () {
   const newName = $('.edit__input').value;
   this.editTaskModal.classList.remove('open');
   if (newName) {
@@ -68,22 +68,22 @@ TaskManager.prototype.saveTaskAfterEdit = function () {
   }
 };
 
-TaskManager.prototype.cancelEdit = function () {
+taskManager.prototype.cancelEdit = function () {
   this.editTaskModal.classList.remove('open');
 };
 
 
-TaskManager.prototype.toggleTask = function (index) {
+taskManager.prototype.toggleTask = function (index) {
   this.tasks[index].isDone = !this.tasks[index].isDone;
   this.renderTasks();
 };
 
-TaskManager.prototype.filterTasks = function() {
+taskManager.prototype.filterTasks = function() {
   this.currentFilter = this.filterTaskInput.value;
   this.renderTasks();
 };
 
-TaskManager.prototype.renderTasks = function () {
+taskManager.prototype.renderTasks = function () {
   this.taskList.innerHTML = '';
 
   const filteredTasks = this.tasks.filter(task => {
@@ -99,13 +99,13 @@ TaskManager.prototype.renderTasks = function () {
   filteredTasks.forEach((task, index) => {
       const taskItem = document.createElement('li');
       taskItem.innerHTML = `
-          <input class="check-box" type="checkbox" ${task.isDone ? 'checked' : ''} onclick="taskManager.toggleTask(${index})">
+          <input class="check-box" type="checkbox" ${task.isDone ? 'checked' : ''} onclick="taskManagerment.toggleTask(${index})">
           <span>${task.name}</span>
-          <button onclick="taskManager.openEditTaskModal(${index})">Edit</button>
-          <button class="red-button" onclick="taskManager.deleteTask(${index})">Delete</button>
+          <button onclick="taskManagerment.openEditTaskModal(${index})">Edit</button>
+          <button class="red-button" onclick="taskManagerment.deleteTask(${index})">Delete</button>
       `;
       this.taskList.appendChild(taskItem);
   });
 };
 
-const taskManager = new TaskManager();
+const taskManagerment = new taskManager();
